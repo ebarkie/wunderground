@@ -7,10 +7,10 @@
 package wunderground
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"reflect"
 	"strings"
 	"time"
 )
@@ -54,6 +54,7 @@ type WxObs obs
 type lastUpload struct {
 	time time.Time
 	p    params
+	s    string
 }
 
 // New sets up a new Wunderground connection.
@@ -67,7 +68,7 @@ func New(id string, pass string) (w Wunderground) {
 	w.Clear()
 
 	// User settings
-	w.ID = id
+	w.ID = strings.ToUpper(id)
 	w.Password = pass
 
 	// Defaults
@@ -137,7 +138,7 @@ func (w *Wunderground) Upload() (skipped bool, err error) {
 
 	// Skip RapidFire upload if nothing has changed
 	if w.isRapidFire() &&
-		reflect.DeepEqual(w.last.p, w.p) &&
+		(w.last.s == w.String()) &&
 		((time.Since(w.last.time) + w.Interval) < rapidFireThreshold) {
 		skipped = true
 
@@ -146,7 +147,15 @@ func (w *Wunderground) Upload() (skipped bool, err error) {
 
 	// Initiate HTTP request
 	client := &http.Client{}
-	resp, err := client.Do(w.createRequest())
+	var resp *http.Response
+	if w.ID == "KTEST0" {
+		resp = &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       ioutil.NopCloser(bytes.NewBufferString("success\r\n")),
+		}
+	} else {
+		resp, err = client.Do(w.createRequest())
+	}
 	if err != nil {
 		return
 	}
@@ -168,8 +177,9 @@ func (w *Wunderground) Upload() (skipped bool, err error) {
 	// In RapidFire mode track last successful payload to avoid
 	// unnecessary uploads.
 	if w.isRapidFire() {
-		w.last.p = w.p
 		w.last.time = time.Now()
+		w.last.p = w.p
+		w.last.s = w.String()
 	}
 
 	return
