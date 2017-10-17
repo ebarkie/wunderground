@@ -16,7 +16,7 @@ func TestDownloadDailyHistory(t *testing.T) {
 
 	w := New("KNCCARY89", "")
 
-	day := time.Date(2017, time.January, 1, 0, 0, 0, 0, time.Now().Location())
+	day := time.Date(2017, time.January, 1, 0, 0, 0, 0, time.Local)
 	o, err := w.DownloadDailyHistory(day)
 
 	if err != nil {
