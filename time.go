@@ -9,13 +9,14 @@ import (
 	"time"
 )
 
-// Time is an anonymous struct representing a standard time.Time
-// so we can create a custom unmarshaler for WU's timestamp format.
+// Time represents a time that can be unmarshaled from a Weather Underground
+// XML response.
 type Time struct {
 	time.Time
 }
 
-// UnmarshalXML method for converting a WU timestamp string to a time.Time
+// UnmarshalXML method for converting a Weather Underground time string to
+// a time.Time.
 func (t *Time) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	var v string
 	d.DecodeElement(&v, &start)

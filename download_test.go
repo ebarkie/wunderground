@@ -11,13 +11,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDownloadDailyHistory(t *testing.T) {
+func TestDownloadDaily(t *testing.T) {
 	a := assert.New(t)
 
-	w := New("KNCCARY89", "")
+	p := Pws{ID: "KNCCARY89"}
 
 	day := time.Date(2017, time.January, 1, 0, 0, 0, 0, time.Local)
-	o, err := w.DownloadDailyHistory(day)
+	o, err := p.DownloadDaily(day)
 
 	if err != nil {
 		a.FailNow(err.Error())

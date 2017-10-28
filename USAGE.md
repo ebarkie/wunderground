@@ -9,167 +9,199 @@ Package wunderground implements the Weather Underground Personal Weather Station
 
 ## Usage
 
-#### type AqObs
-
 ```go
-type AqObs obs
+var (
+	DownloadURL = "https://www.wunderground.com/weatherstation"
+	UploadURL   = "https://rtupdate.wunderground.com/weatherstation"
+)
 ```
+Base download and upload URL's.
 
-AqObs represents air quality observations.
-
-#### func (*AqObs) BC
-
-```go
-func (a *AqObs) BC(v float64)
-```
-BC is BC (black carbon at 880 nm) UG/M3.
-
-#### func (*AqObs) CO
+#### type Aq
 
 ```go
-func (a *AqObs) CO(v int)
-```
-CO is CO (carbon monoxide), conventional ppm.
-
-#### func (*AqObs) COT
-
-```go
-func (a *AqObs) COT(v int)
-```
-COT is CO trace levels ppb.
-
-#### func (*AqObs) EC
-
-```go
-func (a *AqObs) EC(v float64)
-```
-EC is EC (elemental carbon) – PM2.5 UG/M3.
-
-#### func (*AqObs) NO
-
-```go
-func (a *AqObs) NO(v int)
-```
-NO is NO (nitric oxide) ppb.
-
-#### func (*AqObs) NO2
-
-```go
-func (a *AqObs) NO2(v int)
-```
-NO2 is NO2 computed, NOx-NO ppb.
-
-#### func (*AqObs) NO2T
-
-```go
-func (a *AqObs) NO2T(v int)
-```
-NO2T is (nitrogen dioxide), true measure ppb.
-
-#### func (*AqObs) NO2Y
-
-```go
-func (a *AqObs) NO2Y(v int)
-```
-NO2Y is NO2 computed, NOy-NO ppb.
-
-#### func (*AqObs) NO3
-
-```go
-func (a *AqObs) NO3(v float64)
-```
-NO3 is NO3 ion (nitrate, not adjusted for ammonium ion) UG/M3.
-
-#### func (*AqObs) NOX
-
-```go
-func (a *AqObs) NOX(v int)
-```
-NOX is NOx (nitrogen oxides) - ppb.
-
-#### func (*AqObs) NOY
-
-```go
-func (a *AqObs) NOY(v int)
-```
-NOY is NOy (total reactive nitrogen) - ppb.
-
-#### func (*AqObs) OC
-
-```go
-func (a *AqObs) OC(v float64)
-```
-OC is OC (organic carbon, not adjusted for oxygen and hydrogen) – PM2.5 UG/M3.
-
-#### func (*AqObs) Ozone
-
-```go
-func (a *AqObs) Ozone(v int)
-```
-Ozone is Ozone - ppb.
-
-#### func (*AqObs) PM10
-
-```go
-func (a *AqObs) PM10(v float64)
-```
-PM10 s PM10 mass - PM10 mass.
-
-#### func (*AqObs) PM25
-
-```go
-func (a *AqObs) PM25(v float64)
-```
-PM25 is PM2.5 mass - UG/M3.
-
-#### func (*AqObs) SO2
-
-```go
-func (a *AqObs) SO2(v int)
-```
-SO2 (sulfur dioxide), conventional ppb.
-
-#### func (*AqObs) SO2T
-
-```go
-func (a *AqObs) SO2T(v int)
-```
-SO2T is trace levels ppb.
-
-#### func (*AqObs) SO4
-
-```go
-func (a *AqObs) SO4(v float64)
-```
-SO4 is SO4 ion (sulfate, not adjusted for ammonium ion) UG/M3.
-
-#### func (*AqObs) UVAETH
-
-```go
-func (a *AqObs) UVAETH(v float64)
-```
-UVAETH is UV-AETH (second channel of Aethalometer at 370 nm) UG/M3.
-
-#### type Ob
-
-```go
-type Ob struct {
-	Barometer            float64 `xml:"pressure_in"`
-	Dewpoint             float64 `xml:"dewpoint_f"`
-	RainAccumulationDay  float64 `xml:"precip_today_in"`
-	RainAccumulationHour float64 `xml:"precip_1hr_in"`
-	OutdoorHumidity      int     `xml:"relative_humidity"`
-	OutdoorTemperature   float64 `xml:"temp_f"`
-	SolarRadiation       float64 `xml:"solar_radiation"` // Should be an int but WU returns floats sometimes
-	Timestamp            Time    `xml:"observation_time_rfc822"`
-	UVIndex              float64 `xml:"UV"`
-	WindDirection        int     `xml:"wind_degrees"`
-	WindSpeed            float64 `xml:"wind_mph"`
-	WindGust             float64 `xml:"wind_gust_mph"`
+type Aq struct {
+	request.Obs
 }
 ```
 
-Ob is the observation info for the associated timestamp.
+Aq represents air quality measurements.
+
+#### func (*Aq) BC
+
+```go
+func (a *Aq) BC(f float64)
+```
+BC is BC (black carbon at 880 nm) UG/M3.
+
+#### func (*Aq) CO
+
+```go
+func (a *Aq) CO(i int)
+```
+CO is CO (carbon monoxide), caentional ppm.
+
+#### func (*Aq) COT
+
+```go
+func (a *Aq) COT(i int)
+```
+COT is CO trace levels ppb.
+
+#### func (*Aq) EC
+
+```go
+func (a *Aq) EC(f float64)
+```
+EC is EC (elemental carbon) – PM2.5 UG/M3.
+
+#### func (*Aq) NO
+
+```go
+func (a *Aq) NO(i int)
+```
+NO is NO (nitric oxide) ppb.
+
+#### func (*Aq) NO2
+
+```go
+func (a *Aq) NO2(i int)
+```
+NO2 is NO2 computed, NOx-NO ppb.
+
+#### func (*Aq) NO2T
+
+```go
+func (a *Aq) NO2T(i int)
+```
+NO2T is (nitrogen dioxide), true measure ppb.
+
+#### func (*Aq) NO2Y
+
+```go
+func (a *Aq) NO2Y(i int)
+```
+NO2Y is NO2 computed, NOy-NO ppb.
+
+#### func (*Aq) NO3
+
+```go
+func (a *Aq) NO3(f float64)
+```
+NO3 is NO3 ion (nitrate, not adjusted for ammonium ion) UG/M3.
+
+#### func (*Aq) NOX
+
+```go
+func (a *Aq) NOX(i int)
+```
+NOX is NOx (nitrogen oxides) - ppb.
+
+#### func (*Aq) NOY
+
+```go
+func (a *Aq) NOY(i int)
+```
+NOY is NOy (total reactive nitrogen) - ppb.
+
+#### func (*Aq) OC
+
+```go
+func (a *Aq) OC(f float64)
+```
+OC is OC (organic carbon, not adjusted for oxygen and hydrogen) – PM2.5 UG/M3.
+
+#### func (*Aq) Ozone
+
+```go
+func (a *Aq) Ozone(i int)
+```
+Ozone is Ozone - ppb.
+
+#### func (*Aq) PM10
+
+```go
+func (a *Aq) PM10(f float64)
+```
+PM10 s PM10 mass - PM10 mass.
+
+#### func (*Aq) PM25
+
+```go
+func (a *Aq) PM25(f float64)
+```
+PM25 is PM2.5 mass - UG/M3.
+
+#### func (*Aq) SO2
+
+```go
+func (a *Aq) SO2(i int)
+```
+SO2 (sulfur dioxide), caentional ppb.
+
+#### func (*Aq) SO2T
+
+```go
+func (a *Aq) SO2T(i int)
+```
+SO2T is trace levels ppb.
+
+#### func (*Aq) SO4
+
+```go
+func (a *Aq) SO4(f float64)
+```
+SO4 is SO4 ion (sulfate, not adjusted for ammonium ion) UG/M3.
+
+#### func (*Aq) UVAETH
+
+```go
+func (a *Aq) UVAETH(f float64)
+```
+UVAETH is UV-AETH (second channel of Aethalometer at 370 nm) UG/M3.
+
+#### type Pws
+
+```go
+type Pws struct {
+	ID           string        // Station name
+	Password     string        // Station key
+	SoftwareType string        // Software type
+	Interval     time.Duration // Upload interval (default is 2s)
+	Time         time.Time     // Upload time (default is now)
+}
+```
+
+Pws represents a Personal Weather Station.
+
+#### func (Pws) DownloadDaily
+
+```go
+func (p Pws) DownloadDaily(t time.Time) (obs []WxObs, err error)
+```
+DownloadDaily downloads all PWS observations for a given day.
+
+#### func (Pws) Encode
+
+```go
+func (p Pws) Encode(ob ...obs) string
+```
+Encode returns the request URL for the specified observations. This is generally
+used for testing and debugging.
+
+#### func (Pws) Skipped
+
+```go
+func (p Pws) Skipped() bool
+```
+Skipped indicates if the last upload was skipped or not.
+
+#### func (*Pws) Upload
+
+```go
+func (p *Pws) Upload(ob ...obs) (err error)
+```
+Upload uploads the specified observations.
 
 #### type Time
 
@@ -179,227 +211,199 @@ type Time struct {
 }
 ```
 
-Time is an anonymous struct representing a standard time.Time so we can create a
-custom unmarshaler for WU's timestamp format.
+Time represents a time that can be unmarshaled from a Weather Underground XML
+response.
 
 #### func (*Time) UnmarshalXML
 
 ```go
 func (t *Time) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 ```
-UnmarshalXML method for converting a WU timestamp string to a time.Time
+UnmarshalXML method for converting a Weather Underground time string to a
+time.Time.
 
-#### type Wunderground
+#### type Wx
 
 ```go
-type Wunderground struct {
-	ID           string        // Station name
-	Password     string        // Station key
-	SoftwareType string        // Software type
-	Interval     time.Duration // Upload interval
-	URL          string        // Upload URL
-	Timestamp    time.Time     // Upload time
-	Aq           AqObs         // Air quality observations
-	Wx           WxObs         // Weather observations
+type Wx struct {
+	request.Obs
 }
 ```
 
-Wunderground sets up a PWS for uploading.
+Wx represents weather measurements.
 
-#### func  New
-
-```go
-func New(id string, pass string) (w Wunderground)
-```
-New sets up a new Wunderground connection.
-
-#### func (*Wunderground) Clear
+#### func (*Wx) Barometer
 
 ```go
-func (w *Wunderground) Clear()
-```
-Clear clears all fields in the payload.
-
-#### func (Wunderground) DownloadDailyHistory
-
-```go
-func (w Wunderground) DownloadDailyHistory(t time.Time) (obs []Ob, err error)
-```
-DownloadDailyHistory downloads all PWS observations for a given day.
-
-#### func (Wunderground) String
-
-```go
-func (w Wunderground) String() string
-```
-UploadRequest returns the request URL. This is for debugging.
-
-#### func (*Wunderground) Upload
-
-```go
-func (w *Wunderground) Upload() (skipped bool, err error)
-```
-Upload performs the actual upload to Wunderground.
-
-#### type WxObs
-
-```go
-type WxObs obs
-```
-
-WxObs represents weather observations.
-
-#### func (WxObs) Barometer
-
-```go
-func (w WxObs) Barometer(v float64)
+func (w *Wx) Barometer(f float64)
 ```
 Barometer is barometric pressure inches.
 
-#### func (*WxObs) Clouds
+#### func (*Wx) Clouds
 
 ```go
-func (w *WxObs) Clouds(v string)
+func (w *Wx) Clouds(s string)
 ```
 Clouds is SKC, FEW, SCT, BKN, OVC.
 
-#### func (*WxObs) DailyRain
+#### func (*Wx) DailyRain
 
 ```go
-func (w *WxObs) DailyRain(v float64)
+func (w *Wx) DailyRain(f float64)
 ```
 DailyRain is rain inches so far today in local time.
 
-#### func (*WxObs) DewPoint
+#### func (*Wx) DewPoint
 
 ```go
-func (w *WxObs) DewPoint(v float64)
+func (w *Wx) DewPoint(f float64)
 ```
 DewPoint is F outdoor dewpoint.
 
-#### func (*WxObs) IndoorHumidity
+#### func (*Wx) IndoorHumidity
 
 ```go
-func (w *WxObs) IndoorHumidity(v int)
+func (w *Wx) IndoorHumidity(i int)
 ```
 IndoorHumidity is % indoor humidity 0-100%.
 
-#### func (*WxObs) IndoorTemperature
+#### func (*Wx) IndoorTemperature
 
 ```go
-func (w *WxObs) IndoorTemperature(v float64)
+func (w *Wx) IndoorTemperature(f float64)
 ```
 IndoorTemperature is indoor temperature in F.
 
-#### func (*WxObs) LeafWetness
+#### func (*Wx) LeafWetness
 
 ```go
-func (w *WxObs) LeafWetness(v int)
+func (w *Wx) LeafWetness(i int)
 ```
 LeafWetness is %.
 
-#### func (*WxObs) OutdoorHumidity
+#### func (*Wx) OutdoorHumidity
 
 ```go
-func (w *WxObs) OutdoorHumidity(v int)
+func (w *Wx) OutdoorHumidity(i int)
 ```
 OutdoorHumidity is % outdoor humidity 0-100%.
 
-#### func (*WxObs) OutdoorTemperature
+#### func (*Wx) OutdoorTemperature
 
 ```go
-func (w *WxObs) OutdoorTemperature(v float64)
+func (w *Wx) OutdoorTemperature(f float64)
 ```
 OutdoorTemperature is outdoor temperature in F.
 
-#### func (*WxObs) RainRate
+#### func (*Wx) RainRate
 
 ```go
-func (w *WxObs) RainRate(v float64)
+func (w *Wx) RainRate(f float64)
 ```
 RainRate is rain inches over the past hour or the accumulated rainfall in the
 past 60 min.
 
-#### func (*WxObs) SoilMoisture
+#### func (*Wx) SoilMoisture
 
 ```go
-func (w *WxObs) SoilMoisture(v int)
+func (w *Wx) SoilMoisture(i int)
 ```
 SoilMoisture is %.
 
-#### func (*WxObs) SoilTemperature
+#### func (*Wx) SoilTemperature
 
 ```go
-func (w *WxObs) SoilTemperature(v float64)
+func (w *Wx) SoilTemperature(f float64)
 ```
 SoilTemperature is F soil temperature.
 
-#### func (*WxObs) SolarRadiation
+#### func (*Wx) SolarRadiation
 
 ```go
-func (w *WxObs) SolarRadiation(v int)
+func (w *Wx) SolarRadiation(i int)
 ```
 SolarRadiation is solar radiation in W/m^2.
 
-#### func (*WxObs) UVIndex
+#### func (*Wx) UVIndex
 
 ```go
-func (w *WxObs) UVIndex(v float64)
+func (w *Wx) UVIndex(f float64)
 ```
 UVIndex is the UV index.
 
-#### func (*WxObs) Visibility
+#### func (*Wx) Visibility
 
 ```go
-func (w *WxObs) Visibility(v int)
+func (w *Wx) Visibility(i int)
 ```
 Visibility is nm visibility.
 
-#### func (*WxObs) WindDirection
+#### func (*Wx) WindDirection
 
 ```go
-func (w *WxObs) WindDirection(v int)
+func (w *Wx) WindDirection(i int)
 ```
 WindDirection is 0-360 instantaneous wind direction.
 
-#### func (*WxObs) WindGustDirection
+#### func (*Wx) WindGustDirection
 
 ```go
-func (w *WxObs) WindGustDirection(v int)
+func (w *Wx) WindGustDirection(i int)
 ```
 WindGustDirection is 0-360 using software specific time period.
 
-#### func (*WxObs) WindGustDirection10m
+#### func (*Wx) WindGustDirection10m
 
 ```go
-func (w *WxObs) WindGustDirection10m(v int)
+func (w *Wx) WindGustDirection10m(i int)
 ```
 WindGustDirection10m is 0-360 past 10 minutes wind gust direction.
 
-#### func (*WxObs) WindGustSpeed
+#### func (*Wx) WindGustSpeed
 
 ```go
-func (w *WxObs) WindGustSpeed(v float64)
+func (w *Wx) WindGustSpeed(f float64)
 ```
 WindGustSpeed is mph current wind gust, using software specific time period.
 
-#### func (*WxObs) WindGustSpeed10m
+#### func (*Wx) WindGustSpeed10m
 
 ```go
-func (w *WxObs) WindGustSpeed10m(v float64)
+func (w *Wx) WindGustSpeed10m(f float64)
 ```
 WindGustSpeed10m is mph past 10 minutes wind gust mph.
 
-#### func (*WxObs) WindSpeed
+#### func (*Wx) WindSpeed
 
 ```go
-func (w *WxObs) WindSpeed(v float64)
+func (w *Wx) WindSpeed(f float64)
 ```
 WindSpeed is mph instantaneous wind speed.
 
-#### func (*WxObs) WindSpeedAverage2m
+#### func (*Wx) WindSpeedAverage2m
 
 ```go
-func (w *WxObs) WindSpeedAverage2m(v float64)
+func (w *Wx) WindSpeedAverage2m(f float64)
 ```
 WindSpeedAverage2m is mph 2 minute average wind speed mph.
+
+#### type WxObs
+
+```go
+type WxObs struct {
+	Barometer            float64 `xml:"pressure_in"`
+	DewPoint             float64 `xml:"dewpoint_f"`
+	RainAccumulationDay  float64 `xml:"precip_today_in"`
+	RainAccumulationHour float64 `xml:"precip_1hr_in"`
+	OutdoorHumidity      int     `xml:"relative_humidity"`
+	OutdoorTemperature   float64 `xml:"temp_f"`
+	SolarRadiation       float64 `xml:"solar_radiation"` // Should be an int but WU returns floats sometimes
+	Time                 Time    `xml:"observation_time_rfc822"`
+	UVIndex              float64 `xml:"UV"`
+	WindDirection        int     `xml:"wind_degrees"`
+	WindSpeed            float64 `xml:"wind_mph"`
+	WindGust             float64 `xml:"wind_gust_mph"`
+}
+```
+
+WxObs is weather observation info for the associated timestamp.

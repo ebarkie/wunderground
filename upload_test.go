@@ -10,47 +10,40 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestUploadBadURL(t *testing.T) {
+func TestUploadEncode(t *testing.T) {
 	a := assert.New(t)
 
-	w := New("Kssssssnn", "deadbeef")
-	w.URL = "http://localhost/updateweatherstation.php"
+	p := Pws{ID: "KTEST0", Password: "deadbeef"}
 
-	w.Wx.Barometer(29.86)
-	_, err := w.Upload()
-	a.NotNil(err)
-}
+	aq := &Aq{}
+	aq.NO2(10)
+	wx := &Wx{}
+	wx.Barometer(29.86)
+	a.Equal("https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?AqNO2=10&ID=KTEST0&PASSWORD=deadbeef&action=updateraw&baromin=29.86&dateutc=now&realtime=1&rtfreq=2&softwaretype=GoWunder%201337", p.Encode(aq, wx))
 
-func TestUploadRequest(t *testing.T) {
-	a := assert.New(t)
-
-	w := New("KTEST0", "deadbeef")
-
-	w.Aq.NO2(10)
-	w.Wx.Barometer(29.86)
-	a.Equal("https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?AqNO2=10&ID=KTEST0&PASSWORD=deadbeef&action=updateraw&baromin=29.86&dateutc=now&realtime=1&rtfreq=2&softwaretype=GoWunder%201337", w.String())
-
-	w.Wx.OutdoorTemperature(88.44)
-	a.Equal("https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?AqNO2=10&ID=KTEST0&PASSWORD=deadbeef&action=updateraw&baromin=29.86&dateutc=now&realtime=1&rtfreq=2&softwaretype=GoWunder%201337&tempf=88.44", w.String())
+	wx.OutdoorTemperature(88.44)
+	a.Equal("https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?AqNO2=10&ID=KTEST0&PASSWORD=deadbeef&action=updateraw&baromin=29.86&dateutc=now&realtime=1&rtfreq=2&softwaretype=GoWunder%201337&tempf=88.44", p.Encode(aq, wx))
 }
 
 func TestUploadSkip(t *testing.T) {
 	a := assert.New(t)
 
-	w := New("KTEST0", "deadbeef")
+	p := Pws{ID: "KTEST0", Password: "deadbeef"}
 
-	w.Wx.Barometer(29.86)
-	skipped, err := w.Upload()
-	a.Equal(false, skipped)
+	wx := &Wx{}
+	wx.Barometer(29.86)
+	err := p.Upload(wx)
+	a.Equal(false, p.Skipped())
+	a.Nil(err)
+	a.Equal("https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?ID=KTEST0&PASSWORD=deadbeef&action=updateraw&dateutc=now&realtime=1&rtfreq=2&softwaretype=GoWunder%201337", p.Encode(wx))
+
+	wx.Barometer(29.86)
+	err = p.Upload(wx)
+	a.Equal(true, p.Skipped())
 	a.Nil(err)
 
-	w.Wx.Barometer(29.86)
-	skipped, err = w.Upload()
-	a.Equal(true, skipped)
-	a.Nil(err)
-
-	w.Wx.Barometer(29.87)
-	skipped, err = w.Upload()
-	a.Equal(false, skipped)
+	wx.Barometer(29.87)
+	err = p.Upload(wx)
+	a.Equal(false, p.Skipped())
 	a.Nil(err)
 }

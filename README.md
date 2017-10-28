@@ -22,19 +22,19 @@ package main
 
 import (
 	"log"
-	"time"
 
 	"github.com/ebarkie/wunderground"
 )
 
 func main() {
-	w := wunderground.New("Kssssssnn", "deadbeef")
+	w := wunderground.Pws{ID: "Kssssssnn", Password: "deadbeef"}
 
-	w.Wx.Barometer(30.0)
-	w.Wx.OutdoorHumidity(78)
-	w.Wx.OutdoorTemperature(92.3)
+	wx := &wunderground.Wx{}
+	wx.Barometer(30.0)
+	wx.OutdoorHumidity(78)
+	wx.OutdoorTemperature(92.3)
 
-	_, err := w.Upload()
+	err := w.Upload(wx)
 	if err != nil {
 		log.Printf("Upload failed: %s", err)
 	}
