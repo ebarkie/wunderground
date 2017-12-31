@@ -28,18 +28,18 @@ type Wx struct {
 }
 
 // Barometer is barometric pressure inches.
-func (w *Wx) Barometer(f float64) {
-	w.SetFloat("baromin", f)
+func (w *Wx) Barometer(in float64) {
+	w.SetFloat("baromin", in)
 }
 
 // Clouds is SKC, FEW, SCT, BKN, OVC.
-func (w *Wx) Clouds(s string) {
-	w.SetString("clouds", s)
+func (w *Wx) Clouds(c string) {
+	w.SetString("clouds", c)
 }
 
 // DailyRain is rain inches so far today in local time.
-func (w *Wx) DailyRain(f float64) {
-	w.SetFloat("dailyrainin", f)
+func (w *Wx) DailyRain(in float64) {
+	w.SetFloat("dailyrainin", in)
 }
 
 // DewPoint is F outdoor dewpoint.
@@ -48,8 +48,8 @@ func (w *Wx) DewPoint(f float64) {
 }
 
 // IndoorHumidity is % indoor humidity 0-100%.
-func (w *Wx) IndoorHumidity(i int) {
-	w.SetInt("indoorhumudity", i)
+func (w *Wx) IndoorHumidity(p int) {
+	w.SetInt("indoorhumudity", p)
 }
 
 // IndoorTemperature is indoor temperature in F.
@@ -58,13 +58,13 @@ func (w *Wx) IndoorTemperature(f float64) {
 }
 
 // LeafWetness is %.
-func (w *Wx) LeafWetness(i int) {
-	w.SetIntf(request.Indexed{Format: "leafwetness#", Begin: 1, Zero: 1}, i)
+func (w *Wx) LeafWetness(p int) {
+	w.SetIntf(request.Indexed{Format: "leafwetness#", Begin: 1, Zero: 1}, p)
 }
 
 // OutdoorHumidity is % outdoor humidity 0-100%.
-func (w *Wx) OutdoorHumidity(i int) {
-	w.SetInt("humidity", i)
+func (w *Wx) OutdoorHumidity(p int) {
+	w.SetInt("humidity", p)
 }
 
 // OutdoorTemperature is outdoor temperature in F.
@@ -74,18 +74,18 @@ func (w *Wx) OutdoorTemperature(f float64) {
 
 // RainRate is rain inches over the past hour or the accumulated
 // rainfall in the past 60 min.
-func (w *Wx) RainRate(f float64) {
-	w.SetFloat("rainin", f)
+func (w *Wx) RainRate(in float64) {
+	w.SetFloat("rainin", in)
 }
 
 // SolarRadiation is solar radiation in W/m^2.
-func (w *Wx) SolarRadiation(i int) {
-	w.SetInt("solarradiation", i)
+func (w *Wx) SolarRadiation(wm2 int) {
+	w.SetInt("solarradiation", wm2)
 }
 
 // SoilMoisture is %.
-func (w *Wx) SoilMoisture(i int) {
-	w.SetIntf(request.Indexed{Format: "soilmoisture#", Begin: 1, Zero: 1}, i)
+func (w *Wx) SoilMoisture(p int) {
+	w.SetIntf(request.Indexed{Format: "soilmoisture#", Begin: 1, Zero: 1}, p)
 }
 
 // SoilTemperature is F soil temperature.
@@ -94,46 +94,46 @@ func (w *Wx) SoilTemperature(f float64) {
 }
 
 // UVIndex is the UV index.
-func (w *Wx) UVIndex(f float64) {
-	w.SetFloat("UV", f)
+func (w *Wx) UVIndex(i float64) {
+	w.SetFloat("UV", i)
 }
 
 // Visibility is nm visibility.
-func (w *Wx) Visibility(i int) {
-	w.SetInt("visibility", i)
+func (w *Wx) Visibility(nm int) {
+	w.SetInt("visibility", nm)
 }
 
 // WindDirection is 0-360 instantaneous wind direction.
-func (w *Wx) WindDirection(i int) {
-	w.SetInt("winddir", i)
+func (w *Wx) WindDirection(deg int) {
+	w.SetInt("winddir", deg)
 }
 
 // WindGustDirection is 0-360 using software specific time period.
-func (w *Wx) WindGustDirection(i int) {
-	w.SetInt("windgustdir", i)
+func (w *Wx) WindGustDirection(deg int) {
+	w.SetInt("windgustdir", deg)
 }
 
 // WindGustDirection10m is 0-360 past 10 minutes wind gust direction.
-func (w *Wx) WindGustDirection10m(i int) {
-	w.SetInt("windgustdir_10m", i)
+func (w *Wx) WindGustDirection10m(deg int) {
+	w.SetInt("windgustdir_10m", deg)
 }
 
 // WindGustSpeed is mph current wind gust, using software specific time period.
-func (w *Wx) WindGustSpeed(f float64) {
-	w.SetFloat("windgustmph", f)
+func (w *Wx) WindGustSpeed(mph float64) {
+	w.SetFloat("windgustmph", mph)
 }
 
 // WindGustSpeed10m is mph past 10 minutes wind gust mph.
-func (w *Wx) WindGustSpeed10m(f float64) {
-	w.SetFloat("windgustmph_10m", f)
+func (w *Wx) WindGustSpeed10m(mph float64) {
+	w.SetFloat("windgustmph_10m", mph)
 }
 
 // WindSpeed is mph instantaneous wind speed.
-func (w *Wx) WindSpeed(f float64) {
-	w.SetFloat("windspeedmph", f)
+func (w *Wx) WindSpeed(mph float64) {
+	w.SetFloat("windspeedmph", mph)
 }
 
 // WindSpeedAverage2m is mph 2 minute average wind speed mph.
-func (w *Wx) WindSpeedAverage2m(f float64) {
-	w.SetFloat("windspdmph_avg2m", f)
+func (w *Wx) WindSpeedAverage2m(mph float64) {
+	w.SetFloat("windspdmph_avg2m", mph)
 }
