@@ -4,11 +4,11 @@
 
 package wunderground
 
-import "github.com/ebarkie/wunderground/internal/request"
+import "github.com/ebarkie/request"
 
 // Aq represents air quality measurements.
 type Aq struct {
-	request.Obs
+	request.Data
 }
 
 // BC is BC (black carbon at 880 nm) UG/M3.

@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-import "github.com/ebarkie/wunderground/internal/request"
+import "github.com/ebarkie/request"
 
 // DownloadDaily downloads all PWS observations for a given day.
 func (p Pws) DownloadDaily(t time.Time) (obs []WxObs, err error) {
