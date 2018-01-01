@@ -24,5 +24,5 @@ func TestDownloadDaily(t *testing.T) {
 	}
 
 	a.Equal(284, len(o), "Observation count")
-	a.Equal(30.15, o[0].Barometer, "Pressure")
+	a.Equal(30.15, o[0].Bar, "Pressure")
 }

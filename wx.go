@@ -8,18 +8,18 @@ import "github.com/ebarkie/request"
 
 // WxObs is weather observation info for the associated timestamp.
 type WxObs struct {
-	Barometer            float64 `xml:"pressure_in"`
-	DewPoint             float64 `xml:"dewpoint_f"`
-	RainAccumulationDay  float64 `xml:"precip_today_in"`
-	RainAccumulationHour float64 `xml:"precip_1hr_in"`
-	OutdoorHumidity      int     `xml:"relative_humidity"`
-	OutdoorTemperature   float64 `xml:"temp_f"`
-	SolarRadiation       float64 `xml:"solar_radiation"` // Should be an int but WU returns floats sometimes
-	Time                 Time    `xml:"observation_time_rfc822"`
-	UVIndex              float64 `xml:"UV"`
-	WindDirection        int     `xml:"wind_degrees"`
-	WindSpeed            float64 `xml:"wind_mph"`
-	WindGust             float64 `xml:"wind_gust_mph"`
+	Bar           float64 `xml:"pressure_in"`
+	DewPoint      float64 `xml:"dewpoint_f"`
+	RainAccumDay  float64 `xml:"precip_today_in"`
+	RainAccumHour float64 `xml:"precip_1hr_in"`
+	OutHumidity   int     `xml:"relative_humidity"`
+	OutTemp       float64 `xml:"temp_f"`
+	SolarRad      float64 `xml:"solar_radiation"` // Should be an int but WU returns floats sometimes
+	Time          Time    `xml:"observation_time_rfc822"`
+	UVIndex       float64 `xml:"UV"`
+	WindDir       int     `xml:"wind_degrees"`
+	WindSpeed     float64 `xml:"wind_mph"`
+	WindGust      float64 `xml:"wind_gust_mph"`
 }
 
 // Wx represents weather observations.
@@ -27,8 +27,8 @@ type Wx struct {
 	request.Data
 }
 
-// Barometer is barometric pressure inches.
-func (w *Wx) Barometer(in float64) {
+// Bar is barometric pressure inches.
+func (w *Wx) Bar(in float64) {
 	w.SetFloat("baromin", in)
 }
 
@@ -47,13 +47,13 @@ func (w *Wx) DewPoint(f float64) {
 	w.SetFloat("dewptf", f)
 }
 
-// IndoorHumidity is the indoor humidity percentage (0-100).
-func (w *Wx) IndoorHumidity(p int) {
+// InHumidity is the indoor humidity percentage (0-100).
+func (w *Wx) InHumidity(p int) {
 	w.SetInt("indoorhumudity", p)
 }
 
-// IndoorTemperature is the indoor temperature in degrees Fahrenheit.
-func (w *Wx) IndoorTemperature(f float64) {
+// InTemp is the indoor temperature in degrees Fahrenheit.
+func (w *Wx) InTemp(f float64) {
 	w.SetFloat("indoortempf", f)
 }
 
@@ -62,13 +62,13 @@ func (w *Wx) LeafWetness(p int) {
 	w.SetIntf(request.Indexed{Format: "leafwetness#", Begin: 1, Zero: 1}, p)
 }
 
-// OutdoorHumidity is the outdoor humidity percentage (0-100).
-func (w *Wx) OutdoorHumidity(p int) {
+// OutHumidity is the outdoor humidity percentage (0-100).
+func (w *Wx) OutHumidity(p int) {
 	w.SetInt("humidity", p)
 }
 
-// OutdoorTemperature is outdoor temperature in degrees Fahrenheit.
-func (w *Wx) OutdoorTemperature(f float64) {
+// OutTemp is outdoor temperature in degrees Fahrenheit.
+func (w *Wx) OutTemp(f float64) {
 	w.SetFloatf(request.Indexed{Format: "temp#f", Begin: 1, Zero: 1}, f)
 }
 
@@ -78,18 +78,18 @@ func (w *Wx) RainRate(in float64) {
 	w.SetFloat("rainin", in)
 }
 
-// SolarRadiation is solar radiation in watts per square meter.
-func (w *Wx) SolarRadiation(wm2 int) {
+// SolarRad is solar radiation in watts per square meter.
+func (w *Wx) SolarRad(wm2 int) {
 	w.SetInt("solarradiation", wm2)
 }
 
-// SoilMoisture is the soil moisture percentage (0-100)..
-func (w *Wx) SoilMoisture(p int) {
+// SoilMoist is the soil moisture percentage (0-100)..
+func (w *Wx) SoilMoist(p int) {
 	w.SetIntf(request.Indexed{Format: "soilmoisture#", Begin: 1, Zero: 1}, p)
 }
 
-// SoilTemperature is the soil temperature in degrees Fahrenheit.
-func (w *Wx) SoilTemperature(f float64) {
+// SoilTemp is the soil temperature in degrees Fahrenheit.
+func (w *Wx) SoilTemp(f float64) {
 	w.SetFloatf(request.Indexed{Format: "soiltemp#f", Begin: 1, Zero: 1}, f)
 }
 
@@ -103,20 +103,20 @@ func (w *Wx) Visibility(nm int) {
 	w.SetInt("visibility", nm)
 }
 
-// WindDirection is instantaneous wind direction in degrees (0-359).
-func (w *Wx) WindDirection(deg int) {
+// WindDir is instantaneous wind direction in degrees (0-359).
+func (w *Wx) WindDir(deg int) {
 	w.SetInt("winddir", deg)
 }
 
-// WindGustDirection is the software specific time period wind gust
+// WindGustDir is the software specific time period wind gust
 // direction in degrees (0-359).
-func (w *Wx) WindGustDirection(deg int) {
+func (w *Wx) WindGustDir(deg int) {
 	w.SetInt("windgustdir", deg)
 }
 
-// WindGustDirection10m is the 10 minute wind gust direction in
+// WindGustDir10m is the 10 minute wind gust direction in
 // degrees (0-359).
-func (w *Wx) WindGustDirection10m(deg int) {
+func (w *Wx) WindGustDir10m(deg int) {
 	w.SetInt("windgustdir_10m", deg)
 }
 
@@ -137,8 +137,8 @@ func (w *Wx) WindSpeed(mph float64) {
 	w.SetFloat("windspeedmph", mph)
 }
 
-// WindSpeedAverage2m is the 2 minute average wind speed in
+// WindSpeedAvg2m is the 2 minute average wind speed in
 // miles per hour.
-func (w *Wx) WindSpeedAverage2m(mph float64) {
+func (w *Wx) WindSpeedAvg2m(mph float64) {
 	w.SetFloat("windspdmph_avg2m", mph)
 }

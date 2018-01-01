@@ -232,12 +232,12 @@ type Wx struct {
 
 Wx represents weather observations.
 
-#### func (*Wx) Barometer
+#### func (*Wx) Bar
 
 ```go
-func (w *Wx) Barometer(in float64)
+func (w *Wx) Bar(in float64)
 ```
-Barometer is barometric pressure inches.
+Bar is barometric pressure inches.
 
 #### func (*Wx) Clouds
 
@@ -260,19 +260,19 @@ func (w *Wx) DewPoint(f float64)
 ```
 DewPoint is the outdoor dew point in degrees Fahrenheit.
 
-#### func (*Wx) IndoorHumidity
+#### func (*Wx) InHumidity
 
 ```go
-func (w *Wx) IndoorHumidity(p int)
+func (w *Wx) InHumidity(p int)
 ```
-IndoorHumidity is the indoor humidity percentage (0-100).
+InHumidity is the indoor humidity percentage (0-100).
 
-#### func (*Wx) IndoorTemperature
+#### func (*Wx) InTemp
 
 ```go
-func (w *Wx) IndoorTemperature(f float64)
+func (w *Wx) InTemp(f float64)
 ```
-IndoorTemperature is the indoor temperature in degrees Fahrenheit.
+InTemp is the indoor temperature in degrees Fahrenheit.
 
 #### func (*Wx) LeafWetness
 
@@ -281,19 +281,19 @@ func (w *Wx) LeafWetness(p int)
 ```
 LeafWetness is the leaf wetness percentage (0-100).
 
-#### func (*Wx) OutdoorHumidity
+#### func (*Wx) OutHumidity
 
 ```go
-func (w *Wx) OutdoorHumidity(p int)
+func (w *Wx) OutHumidity(p int)
 ```
-OutdoorHumidity is the outdoor humidity percentage (0-100).
+OutHumidity is the outdoor humidity percentage (0-100).
 
-#### func (*Wx) OutdoorTemperature
+#### func (*Wx) OutTemp
 
 ```go
-func (w *Wx) OutdoorTemperature(f float64)
+func (w *Wx) OutTemp(f float64)
 ```
-OutdoorTemperature is outdoor temperature in degrees Fahrenheit.
+OutTemp is outdoor temperature in degrees Fahrenheit.
 
 #### func (*Wx) RainRate
 
@@ -303,26 +303,26 @@ func (w *Wx) RainRate(in float64)
 RainRate is rain inches over the past hour or the accumulated rainfall for the
 past 60 minutes in inches.
 
-#### func (*Wx) SoilMoisture
+#### func (*Wx) SoilMoist
 
 ```go
-func (w *Wx) SoilMoisture(p int)
+func (w *Wx) SoilMoist(p int)
 ```
-SoilMoisture is the soil moisture percentage (0-100)..
+SoilMoist is the soil moisture percentage (0-100)..
 
-#### func (*Wx) SoilTemperature
+#### func (*Wx) SoilTemp
 
 ```go
-func (w *Wx) SoilTemperature(f float64)
+func (w *Wx) SoilTemp(f float64)
 ```
-SoilTemperature is the soil temperature in degrees Fahrenheit.
+SoilTemp is the soil temperature in degrees Fahrenheit.
 
-#### func (*Wx) SolarRadiation
+#### func (*Wx) SolarRad
 
 ```go
-func (w *Wx) SolarRadiation(wm2 int)
+func (w *Wx) SolarRad(wm2 int)
 ```
-SolarRadiation is solar radiation in watts per square meter.
+SolarRad is solar radiation in watts per square meter.
 
 #### func (*Wx) UVIndex
 
@@ -338,27 +338,27 @@ func (w *Wx) Visibility(nm int)
 ```
 Visibility is visibility in nautical miles.
 
-#### func (*Wx) WindDirection
+#### func (*Wx) WindDir
 
 ```go
-func (w *Wx) WindDirection(deg int)
+func (w *Wx) WindDir(deg int)
 ```
-WindDirection is instantaneous wind direction in degrees (0-359).
+WindDir is instantaneous wind direction in degrees (0-359).
 
-#### func (*Wx) WindGustDirection
+#### func (*Wx) WindGustDir
 
 ```go
-func (w *Wx) WindGustDirection(deg int)
+func (w *Wx) WindGustDir(deg int)
 ```
-WindGustDirection is the software specific time period wind gust direction in
-degrees (0-359).
+WindGustDir is the software specific time period wind gust direction in degrees
+(0-359).
 
-#### func (*Wx) WindGustDirection10m
+#### func (*Wx) WindGustDir10m
 
 ```go
-func (w *Wx) WindGustDirection10m(deg int)
+func (w *Wx) WindGustDir10m(deg int)
 ```
-WindGustDirection10m is the 10 minute wind gust direction in degrees (0-359).
+WindGustDir10m is the 10 minute wind gust direction in degrees (0-359).
 
 #### func (*Wx) WindGustSpeed
 
@@ -382,29 +382,29 @@ func (w *Wx) WindSpeed(mph float64)
 ```
 WindSpeed is the instantaneous wind speed in miles per hour.
 
-#### func (*Wx) WindSpeedAverage2m
+#### func (*Wx) WindSpeedAvg2m
 
 ```go
-func (w *Wx) WindSpeedAverage2m(mph float64)
+func (w *Wx) WindSpeedAvg2m(mph float64)
 ```
-WindSpeedAverage2m is the 2 minute average wind speed in miles per hour.
+WindSpeedAvg2m is the 2 minute average wind speed in miles per hour.
 
 #### type WxObs
 
 ```go
 type WxObs struct {
-	Barometer            float64 `xml:"pressure_in"`
-	DewPoint             float64 `xml:"dewpoint_f"`
-	RainAccumulationDay  float64 `xml:"precip_today_in"`
-	RainAccumulationHour float64 `xml:"precip_1hr_in"`
-	OutdoorHumidity      int     `xml:"relative_humidity"`
-	OutdoorTemperature   float64 `xml:"temp_f"`
-	SolarRadiation       float64 `xml:"solar_radiation"` // Should be an int but WU returns floats sometimes
-	Time                 Time    `xml:"observation_time_rfc822"`
-	UVIndex              float64 `xml:"UV"`
-	WindDirection        int     `xml:"wind_degrees"`
-	WindSpeed            float64 `xml:"wind_mph"`
-	WindGust             float64 `xml:"wind_gust_mph"`
+	Bar           float64 `xml:"pressure_in"`
+	DewPoint      float64 `xml:"dewpoint_f"`
+	RainAccumDay  float64 `xml:"precip_today_in"`
+	RainAccumHour float64 `xml:"precip_1hr_in"`
+	OutHumidity   int     `xml:"relative_humidity"`
+	OutTemp       float64 `xml:"temp_f"`
+	SolarRad      float64 `xml:"solar_radiation"` // Should be an int but WU returns floats sometimes
+	Time          Time    `xml:"observation_time_rfc822"`
+	UVIndex       float64 `xml:"UV"`
+	WindDir       int     `xml:"wind_degrees"`
+	WindSpeed     float64 `xml:"wind_mph"`
+	WindGust      float64 `xml:"wind_gust_mph"`
 }
 ```
 

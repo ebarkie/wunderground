@@ -18,10 +18,10 @@ func TestUploadEncode(t *testing.T) {
 	aq := &Aq{}
 	aq.NO2(10)
 	wx := &Wx{}
-	wx.Barometer(29.86)
+	wx.Bar(29.86)
 	a.Equal("https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?AqNO2=10&ID=KTEST0&PASSWORD=deadbeef&action=updateraw&baromin=29.86&dateutc=now&realtime=1&rtfreq=2&softwaretype=GoWunder%201337", p.Encode(aq, wx))
 
-	wx.OutdoorTemperature(88.44)
+	wx.OutTemp(88.44)
 	a.Equal("https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?AqNO2=10&ID=KTEST0&PASSWORD=deadbeef&action=updateraw&baromin=29.86&dateutc=now&realtime=1&rtfreq=2&softwaretype=GoWunder%201337&tempf=88.44", p.Encode(aq, wx))
 }
 
@@ -31,18 +31,18 @@ func TestUploadSkip(t *testing.T) {
 	p := Pws{ID: "KTEST0", Password: "deadbeef"}
 
 	wx := &Wx{}
-	wx.Barometer(29.86)
+	wx.Bar(29.86)
 	err := p.Upload(wx)
 	a.Equal(false, p.Skipped())
 	a.Nil(err)
 	a.Equal("https://rtupdate.wunderground.com/weatherstation/updateweatherstation.php?ID=KTEST0&PASSWORD=deadbeef&action=updateraw&dateutc=now&realtime=1&rtfreq=2&softwaretype=GoWunder%201337", p.Encode(wx))
 
-	wx.Barometer(29.86)
+	wx.Bar(29.86)
 	err = p.Upload(wx)
 	a.Equal(true, p.Skipped())
 	a.Nil(err)
 
-	wx.Barometer(29.87)
+	wx.Bar(29.87)
 	err = p.Upload(wx)
 	a.Equal(false, p.Skipped())
 	a.Nil(err)
