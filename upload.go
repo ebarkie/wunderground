@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 Eric Barkie. All rights reserved.
+// Copyright (c) 2016-2018 Eric Barkie. All rights reserved.
 // Use of this source code is governed by the MIT license
 // that can be found in the LICENSE file.
 
@@ -41,7 +41,7 @@ func (p Pws) rapidFire() bool {
 func (p Pws) createRequest(ob ...obs) *http.Request {
 	req, _ := http.NewRequest("GET", UploadURL+"/updateweatherstation.php", nil)
 
-	// Create mandatory GET query parameters.
+	// Create mandatory query parameters.
 	q := req.URL.Query()
 	q.Add("action", "updateraw")
 	q.Add("ID", strings.ToUpper(p.ID))
@@ -65,7 +65,7 @@ func (p Pws) createRequest(ob ...obs) *http.Request {
 		}
 	}
 
-	// Add observations to  GET query parameters.
+	// Add observations to query parameters.
 	for _, o := range ob {
 		for k, v := range o.Values() {
 			q.Add(k, v)
