@@ -6,7 +6,7 @@ package wunderground
 
 import "github.com/ebarkie/request"
 
-// Aq represents air quality measurements.
+// Aq represents air quality observations.
 type Aq struct {
 	request.Data
 }
