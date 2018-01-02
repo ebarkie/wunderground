@@ -14,6 +14,8 @@ import (
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/ebarkie/http/query"
 )
 
 const rapidFireDuration = 5 * time.Minute
@@ -27,18 +29,13 @@ type lastUpload struct {
 	skipped bool
 }
 
-type obs interface {
-	Clear()
-	Values() map[string]string
-}
-
 // rapidFire indicates if the interval is RapidFire.
 func (p Pws) rapidFire() bool {
 	return p.Interval < rapidFireDuration
 }
 
 // createRequest builds the HTTP request.
-func (p Pws) createRequest(ob ...obs) *http.Request {
+func (p Pws) createRequest(obs ...query.Values) *http.Request {
 	req, _ := http.NewRequest("GET", UploadURL+"/updateweatherstation.php", nil)
 
 	// Create mandatory query parameters.
@@ -66,7 +63,7 @@ func (p Pws) createRequest(ob ...obs) *http.Request {
 	}
 
 	// Add observations to query parameters.
-	for _, o := range ob {
+	for _, o := range obs {
 		for k, v := range o.Values() {
 			q.Add(k, v)
 		}
@@ -81,8 +78,8 @@ func (p Pws) createRequest(ob ...obs) *http.Request {
 
 // Encode returns the request URL for the specified observations.  This
 // is generally used for testing and debugging.
-func (p Pws) Encode(ob ...obs) string {
-	return p.createRequest(ob...).URL.String()
+func (p Pws) Encode(obs ...query.Values) string {
+	return p.createRequest(obs...).URL.String()
 }
 
 // Skipped indicates if the last upload was skipped or not.
@@ -91,17 +88,17 @@ func (p Pws) Skipped() bool {
 }
 
 // Upload uploads the specified observations.
-func (p *Pws) Upload(ob ...obs) (err error) {
+func (p *Pws) Upload(obs ...query.Values) (err error) {
 	// Clear payload(s) after upload attempt.
 	defer func() {
-		for _, o := range ob {
+		for _, o := range obs {
 			o.Clear()
 		}
 	}()
 
 	// Skip RapidFire upload if nothing has changed.
 	if p.rapidFire() &&
-		p.last.query == p.Encode(ob...) &&
+		p.last.query == p.Encode(obs...) &&
 		(time.Since(p.last.time)+p.Interval < rapidFireDuration) {
 		p.last.skipped = true
 		return
@@ -118,7 +115,7 @@ func (p *Pws) Upload(ob ...obs) (err error) {
 			Body:       ioutil.NopCloser(bytes.NewBufferString("success\r\n")),
 		}
 	} else {
-		resp, err = client.Do(p.createRequest(ob...))
+		resp, err = client.Do(p.createRequest(obs...))
 	}
 	if err != nil {
 		return
@@ -140,7 +137,7 @@ func (p *Pws) Upload(ob ...obs) (err error) {
 
 	// Record last successful upload time and query.
 	p.last.time = time.Now()
-	p.last.query = p.Encode(ob...)
+	p.last.query = p.Encode(obs...)
 
 	return
 }

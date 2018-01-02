@@ -4,7 +4,7 @@
 
 package wunderground
 
-import "github.com/ebarkie/request"
+import "github.com/ebarkie/http/query"
 
 // WxObs is weather observation info for the associated timestamp.
 type WxObs struct {
@@ -24,7 +24,7 @@ type WxObs struct {
 
 // Wx represents weather observations.
 type Wx struct {
-	request.Data
+	query.Data
 }
 
 // Bar is barometric pressure inches.
@@ -59,7 +59,7 @@ func (w *Wx) InTemp(f float64) {
 
 // LeafWetness is the leaf wetness percentage (0-100).
 func (w *Wx) LeafWetness(p int) {
-	w.SetIntf(request.Indexed{Format: "leafwetness#", Begin: 1, Zero: 1}, p)
+	w.SetIntf(query.Indexed{Format: "leafwetness#", Begin: 1, Zero: 1}, p)
 }
 
 // OutHumidity is the outdoor humidity percentage (0-100).
@@ -69,7 +69,7 @@ func (w *Wx) OutHumidity(p int) {
 
 // OutTemp is outdoor temperature in degrees Fahrenheit.
 func (w *Wx) OutTemp(f float64) {
-	w.SetFloatf(request.Indexed{Format: "temp#f", Begin: 1, Zero: 1}, f)
+	w.SetFloatf(query.Indexed{Format: "temp#f", Begin: 1, Zero: 1}, f)
 }
 
 // RainRate is rain inches over the past hour or the accumulated
@@ -85,12 +85,12 @@ func (w *Wx) SolarRad(wm2 int) {
 
 // SoilMoist is the soil moisture percentage (0-100)..
 func (w *Wx) SoilMoist(p int) {
-	w.SetIntf(request.Indexed{Format: "soilmoisture#", Begin: 1, Zero: 1}, p)
+	w.SetIntf(query.Indexed{Format: "soilmoisture#", Begin: 1, Zero: 1}, p)
 }
 
 // SoilTemp is the soil temperature in degrees Fahrenheit.
 func (w *Wx) SoilTemp(f float64) {
-	w.SetFloatf(request.Indexed{Format: "soiltemp#f", Begin: 1, Zero: 1}, f)
+	w.SetFloatf(query.Indexed{Format: "soiltemp#f", Begin: 1, Zero: 1}, f)
 }
 
 // UVIndex is the UltraViolet light index.

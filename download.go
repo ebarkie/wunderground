@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-import "github.com/ebarkie/request"
+import "strconv"
 
 // DownloadDaily downloads all PWS observations for a given day.
 func (p Pws) DownloadDaily(t time.Time) (obs []WxObs, err error) {
@@ -20,9 +20,9 @@ func (p Pws) DownloadDaily(t time.Time) (obs []WxObs, err error) {
 	req, _ := http.NewRequest("GET", DownloadURL+"/WXDailyHistory.asp", nil)
 	q := req.URL.Query()
 	q.Add("ID", p.ID)
-	q.Add("year", request.Int(t.Year()))
-	q.Add("month", request.Int(int(t.Month())))
-	q.Add("day", request.Int(t.Day()))
+	q.Add("year", strconv.Itoa(t.Year()))
+	q.Add("month", strconv.Itoa(int(t.Month())))
+	q.Add("day", strconv.Itoa(t.Day()))
 	q.Add("format", "XML")
 	req.URL.RawQuery = q.Encode()
 

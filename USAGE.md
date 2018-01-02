@@ -21,7 +21,7 @@ Base download and upload URL's.
 
 ```go
 type Aq struct {
-	request.Data
+	query.Data
 }
 ```
 
@@ -184,7 +184,7 @@ DownloadDaily downloads all PWS observations for a given day.
 #### func (Pws) Encode
 
 ```go
-func (p Pws) Encode(ob ...obs) string
+func (p Pws) Encode(obs ...query.Values) string
 ```
 Encode returns the request URL for the specified observations. This is generally
 used for testing and debugging.
@@ -199,7 +199,7 @@ Skipped indicates if the last upload was skipped or not.
 #### func (*Pws) Upload
 
 ```go
-func (p *Pws) Upload(ob ...obs) (err error)
+func (p *Pws) Upload(obs ...query.Values) (err error)
 ```
 Upload uploads the specified observations.
 
@@ -226,7 +226,7 @@ time.Time.
 
 ```go
 type Wx struct {
-	request.Data
+	query.Data
 }
 ```
 
