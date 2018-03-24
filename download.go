@@ -27,9 +27,8 @@ func (p Pws) DownloadDaily(t time.Time) (obs []WxObs, err error) {
 	req.URL.RawQuery = q.Encode()
 
 	// Initiate HTTP request.
-	client := &http.Client{}
 	var resp *http.Response
-	resp, err = client.Do(req)
+	resp, err = httpClient.Do(req)
 	if err != nil {
 		return
 	}

@@ -9,13 +9,20 @@ package wunderground
 // Refer to:
 // http://wiki.wunderground.com/index.php/PWS_-_Upload_Protocol
 
-import "time"
+import (
+	"net/http"
+	"time"
+)
 
 // Base download and upload URL's.
 var (
 	DownloadURL = "https://www.wunderground.com/weatherstation"
 	UploadURL   = "https://rtupdate.wunderground.com/weatherstation"
 )
+
+var httpClient = &http.Client{
+	Timeout: time.Duration(8 * time.Second),
+}
 
 // Pws represents a Personal Weather Station.
 type Pws struct {

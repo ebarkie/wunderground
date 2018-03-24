@@ -107,7 +107,6 @@ func (p *Pws) Upload(obs ...query.Values) (err error) {
 
 	// Build fake HTTP response if test station was specified, otherwise
 	// initiate the real HTTP request.
-	client := &http.Client{}
 	var resp *http.Response
 	if p.ID == "KTEST0" {
 		resp = &http.Response{
@@ -115,7 +114,7 @@ func (p *Pws) Upload(obs ...query.Values) (err error) {
 			Body:       ioutil.NopCloser(bytes.NewBufferString("success\r\n")),
 		}
 	} else {
-		resp, err = client.Do(p.createRequest(obs...))
+		resp, err = httpClient.Do(p.createRequest(obs...))
 	}
 	if err != nil {
 		return
