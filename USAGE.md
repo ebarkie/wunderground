@@ -237,7 +237,7 @@ Wx represents weather observations.
 ```go
 func (w *Wx) Bar(in float64)
 ```
-Bar is barometric pressure inches.
+Bar is barometric pressure in inches.
 
 #### func (*Wx) Clouds
 

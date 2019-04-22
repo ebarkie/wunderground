@@ -27,7 +27,7 @@ type Wx struct {
 	query.Data
 }
 
-// Bar is barometric pressure inches.
+// Bar is barometric pressure in inches.
 func (w *Wx) Bar(in float64) {
 	w.SetFloat("baromin", in)
 }
