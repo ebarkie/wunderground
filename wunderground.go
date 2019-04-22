@@ -6,9 +6,6 @@
 // Station (PWS) protocol.
 package wunderground
 
-// Refer to:
-// http://wiki.wunderground.com/index.php/PWS_-_Upload_Protocol
-
 import (
 	"net/http"
 	"time"
