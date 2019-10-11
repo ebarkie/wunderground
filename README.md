@@ -1,14 +1,11 @@
 # Wunderground
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://choosealicense.com/licenses/mit/)
-[![Build Status](https://travis-ci.org/ebarkie/wunderground.svg?branch=master)](https://travis-ci.org/ebarkie/wunderground)
-
 Go package for uploading and downloading [Weather Underground](http://www.wunderground.com) Personal Weather Station observations.
 
 ## Installation
 
 ```
-$ go get github.com/ebarkie/wunderground
+$ go get gitlab.com/ebarkie/wunderground
 ```
 
 ## Usage
@@ -23,7 +20,7 @@ package main
 import (
 	"log"
 
-	"github.com/ebarkie/wunderground"
+	"gitlab.com/ebarkie/wunderground"
 )
 
 func main() {

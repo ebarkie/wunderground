@@ -4,7 +4,7 @@
 
 package wunderground
 
-import "github.com/ebarkie/http/query"
+import "gitlab.com/ebarkie/http/query"
 
 // Aq represents air quality observations.
 type Aq struct {
