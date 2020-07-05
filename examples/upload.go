@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"gitlab.com/ebarkie/wunderground"
+	"github.com/ebarkie/wunderground"
 )
 
 func main() {

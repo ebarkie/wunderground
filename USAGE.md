@@ -1,7 +1,7 @@
 # wunderground
 
 ```go
-import "gitlab.com/ebarkie/wunderground"
+import "github.com/ebarkie/wunderground"
 ```
 
 Package wunderground implements the Weather Underground Personal Weather Station

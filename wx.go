@@ -4,7 +4,7 @@
 
 package wunderground
 
-import "gitlab.com/ebarkie/http/query"
+import "github.com/ebarkie/http/query"
 
 // WxObs is weather observation info for the associated timestamp.
 type WxObs struct {

@@ -5,7 +5,7 @@ Go package for uploading and downloading [Weather Underground](http://www.wunder
 ## Installation
 
 ```
-$ go get gitlab.com/ebarkie/wunderground
+$ go get github.com/ebarkie/wunderground
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ package main
 import (
 	"log"
 
-	"gitlab.com/ebarkie/wunderground"
+	"github.com/ebarkie/wunderground"
 )
 
 func main() {

@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	"gitlab.com/ebarkie/http/query"
+	"github.com/ebarkie/http/query"
 )
 
 const rapidFireDuration = 5 * time.Minute
