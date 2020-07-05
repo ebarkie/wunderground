@@ -1,3 +1,5 @@
+![Push](https://github.com/ebarkie/wunderground/workflows/Push/badge.svg)
+
 # Wunderground
 
 Go package for uploading and downloading [Weather Underground](http://www.wunderground.com) Personal Weather Station observations.
@@ -40,6 +42,6 @@ func main() {
 
 ## License
 
-Copyright (c) 2016-2019 Eric Barkie. All rights reserved.  
+Copyright (c) 2016-2020 Eric Barkie. All rights reserved.  
 Use of this source code is governed by the MIT license
 that can be found in the [LICENSE](LICENSE) file.
