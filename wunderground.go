@@ -18,7 +18,7 @@ var (
 )
 
 var httpClient = &http.Client{
-	Timeout: time.Duration(8 * time.Second),
+	Timeout: 8 * time.Second,
 }
 
 // Pws represents a Personal Weather Station.
