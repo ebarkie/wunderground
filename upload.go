@@ -71,7 +71,7 @@ func (p Pws) createRequest(obs ...query.Values) *http.Request {
 
 	// Do a '+' -> %20 replacement here since WU doesn't decode the '+'
 	// properly and we use it in softwaretype, maybe elsewhere too.
-	req.URL.RawQuery = strings.Replace(q.Encode(), "+", "%20", -1)
+	req.URL.RawQuery = strings.ReplaceAll(q.Encode(), "+", "%20")
 
 	return req
 }
