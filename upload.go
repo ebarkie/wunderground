@@ -10,7 +10,7 @@ package wunderground
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -111,7 +111,7 @@ func (p *Pws) Upload(obs ...query.Values) (err error) {
 	if p.ID == "KTEST0" {
 		resp = &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       ioutil.NopCloser(bytes.NewBufferString("success\r\n")),
+			Body:       io.NopCloser(bytes.NewBufferString("success\r\n")),
 		}
 	} else {
 		resp, err = httpClient.Do(p.createRequest(obs...))
@@ -128,7 +128,7 @@ func (p *Pws) Upload(obs ...query.Values) (err error) {
 	}
 
 	// Parse response.
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 	if strings.TrimRight(string(body), "\n\r") != "success" {
 		err = fmt.Errorf("HTTP request returned bad body: %s", body)
 		return

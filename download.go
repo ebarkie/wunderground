@@ -7,7 +7,7 @@ package wunderground
 import (
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"time"
 )
@@ -41,7 +41,7 @@ func (p Pws) DownloadDaily(t time.Time) (obs []WxObs, err error) {
 	}
 
 	// Parse response.
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 	day := struct {
 		Current []WxObs `xml:"current_observation"`
 	}{}
